@@ -15,7 +15,6 @@ This is only a guard service of bus api. It connects to a bus service and an oau
 ### Packages
 - exception  : spring exception handler
 - interceptor: spring interceptor
-- validator  : spring validator
 - web        : spring controller
 - service    : spring service
 - config     : spring java config
