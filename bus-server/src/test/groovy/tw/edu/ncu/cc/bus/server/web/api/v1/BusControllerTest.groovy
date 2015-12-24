@@ -4,6 +4,7 @@ import org.junit.ClassRule
 import org.mockserver.model.Header
 import org.mockserver.model.HttpRequest
 import org.mockserver.model.HttpResponse
+import org.mockserver.model.Parameter
 import resource.ServerResource
 import specification.IntegrationSpecification
 import spock.lang.Shared
@@ -22,7 +23,7 @@ class BusControllerTest extends IntegrationSpecification {
         serverResource.mockServer().when(
                 HttpRequest.request()
                         .withMethod( "GET" )
-                        .withPath( "/providers" )
+                        .withPath( "/StaticData/GetProvider.xml" )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -49,7 +50,8 @@ class BusControllerTest extends IntegrationSpecification {
         serverResource.mockServer().when(
                 HttpRequest.request()
                         .withMethod( "GET" )
-                        .withPath( "/routes/132/buses" )
+                        .withPath( "/GetBusData.xml" )
+                        .withQueryStringParameter( new Parameter( "routeIds", "3220" ) )
         ).respond(
                 HttpResponse.response()
                         .withStatusCode( 200 )
@@ -93,7 +95,7 @@ class BusControllerTest extends IntegrationSpecification {
         when:
             def response = JSON(
                     server().perform(
-                            get( "/v1/routes/132/buses" )
+                            get( "/v1/routes/3220/buses" )
                                     .with( apiToken() )
                     ).andExpect(
                             status().isOk()
@@ -101,6 +103,18 @@ class BusControllerTest extends IntegrationSpecification {
             )
         then:
             response.BusDynInfo.BusInfo.BusData.RouteID == 3220
+    }
+
+    def "it can only provide bus info of some route ids"() {
+        expect:
+            server().perform(
+                    get( "/v1/routes/${routeId}/buses" )
+                            .with( apiToken() )
+            ).andExpect(
+                    status().isBadRequest()
+            )
+        where:
+            routeId << [ "123", "111", "132" ]
     }
 
 }
