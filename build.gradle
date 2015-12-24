@@ -1,0 +1,36 @@
+
+allprojects{
+    group = 'tw.edu.ncu.cc'
+    version = '0.1.0'
+}
+
+subprojects{
+
+    apply plugin: 'groovy'
+
+    sourceCompatibility = 1.8
+
+    tasks.withType( JavaCompile ) {
+        options.encoding = "UTF-8"
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile 'org.codehaus.groovy:groovy-all:2.4.4'
+        testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+    }
+
+}
+
+
+
+
+
+
+
+
+
+

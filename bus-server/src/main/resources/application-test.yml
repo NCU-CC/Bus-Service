@@ -1,0 +1,14 @@
+logging:
+  level: DEBUG
+
+custom:
+  management:
+    security:
+      access: hasIpAddress('127.0.0.1') or hasIpAddress('0:0:0:0:0:0:0:1')
+  connection:
+    remote:
+      prefix: http://localhost:8898
+
+ncu:
+  oauth:
+    oauth-enabled: true

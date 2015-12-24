@@ -1,0 +1,14 @@
+server:
+  port: 8181
+spring:
+  application:
+    name: bus
+  main:
+    show_banner: false
+  profiles:
+    active: production
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true

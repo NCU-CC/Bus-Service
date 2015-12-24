@@ -1,0 +1,17 @@
+server:
+  port: 5278
+
+logging:
+  level: INFO
+
+custom:
+  management:
+    security:
+      access: hasIpAddress('127.0.0.1') or hasIpAddress('0:0:0:0:0:0:0:1')
+  connection:
+    remote:
+      prefix: https://localhost/bus/api/v1/
+ncu:
+  oauth:
+    api-token: your-api-token
+    server-path: https://localhost/oauth
