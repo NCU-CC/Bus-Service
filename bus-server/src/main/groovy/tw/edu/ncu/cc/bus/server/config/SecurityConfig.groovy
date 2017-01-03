@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import tw.edu.ncu.cc.oauth.resource.filter.ApiTokenDecisionFilter
+import tw.edu.ncu.cc.oauth.resource.filter.AccessTokenDecisionFilter
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity( prePostEnabled = true )
@@ -20,15 +20,15 @@ public class SecurityConfig {
     public static class OauthGuard1 extends WebSecurityConfigurerAdapter {
 
         @Autowired
-        def ApiTokenDecisionFilter apiTokenDecisionFilter
+        def AccessTokenDecisionFilter accessTokenDecisionFilter
 
         @Override
         protected void configure( HttpSecurity http ) throws Exception {
             http.requestMatchers()
                     .antMatchers( "/v*/providers/**" )
                     .antMatchers( "/v*/routes/**" )
-                .and()
-                    .addFilterAfter( apiTokenDecisionFilter, UsernamePasswordAuthenticationFilter )
+                    .and()
+                    .addFilterAfter( accessTokenDecisionFilter, UsernamePasswordAuthenticationFilter )
                     .csrf().disable()
         }
     }

@@ -11,10 +11,12 @@ import spock.lang.Shared
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.apiToken
+import static tw.edu.ncu.cc.oauth.resource.test.ApiAuthMockMvcRequestPostProcessors.accessToken
 
 
 class BusControllerTest extends IntegrationSpecification {
+
+    def token = accessToken().user( "user-uid" ).scope( "user.info.basic.read" )
 
     @Shared @ClassRule
     ServerResource serverResource = new ServerResource( 8898, 8899 )
@@ -82,7 +84,7 @@ class BusControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                             get( "/v1/providers" )
-                                    .with( apiToken() )
+                                    .with( token )
                     ).andExpect(
                             status().isOk()
                     ).andReturn()
@@ -96,7 +98,7 @@ class BusControllerTest extends IntegrationSpecification {
             def response = JSON(
                     server().perform(
                             get( "/v1/routes/3220/buses" )
-                                    .with( apiToken() )
+                                    .with( token )
                     ).andExpect(
                             status().isOk()
                     ).andReturn()
@@ -109,7 +111,7 @@ class BusControllerTest extends IntegrationSpecification {
         expect:
             server().perform(
                     get( "/v1/routes/${routeId}/buses" )
-                            .with( apiToken() )
+                            .with( token )
             ).andExpect(
                     status().isBadRequest()
             )
