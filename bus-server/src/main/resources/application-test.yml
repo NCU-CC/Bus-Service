@@ -12,3 +12,6 @@ custom:
 ncu:
   oauth:
     oauth-enabled: true
+
+log-api:
+    uri: https://log.apitest.cc.ncu.edu.tw/log/api

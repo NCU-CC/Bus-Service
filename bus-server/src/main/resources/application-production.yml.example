@@ -15,3 +15,6 @@ ncu:
   oauth:
     api-token: your-api-token
     server-path: https://localhost/oauth
+
+log-api:
+    uri: https://log.apitest.cc.ncu.edu.tw/log/api
